@@ -17,39 +17,39 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`newdatabase20140219` /*!40100 DEFAULT C
 USE `newdatabase20140219`;
 
 /*Table structure for table `admeshtable` */
-
+`admeshtable``admeshtable`
 DROP TABLE IF EXISTS `admeshtable`;
 
 CREATE TABLE `admeshtable` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `hash` char(16) DEFAULT NULL,
-  `minX` float DEFAULT NULL,
-  `maxX` float DEFAULT NULL,
-  `minY` float DEFAULT NULL,
-  `maxY` float DEFAULT NULL,
-  `minZ` float DEFAULT NULL,
-  `maxZ` float DEFAULT NULL,
-  `facetsOverallBefore` int(10) unsigned DEFAULT NULL,
-  `facetsOverallAfter` int(10) unsigned DEFAULT NULL,
-  `facetsDiscon1Before` int(10) unsigned DEFAULT NULL,
-  `facetsDiscon1After` int(10) unsigned DEFAULT NULL,
-  `facetsDiscon2Before` int(10) unsigned DEFAULT NULL,
-  `facetsDiscon2After` int(10) unsigned DEFAULT NULL,
-  `facetsDiscon3Before` int(10) unsigned DEFAULT NULL,
-  `facetsDiscon3After` int(10) unsigned DEFAULT NULL,
-  `facetsDisconBefore` int(10) unsigned DEFAULT NULL,
-  `facetsDisconAfter` int(10) unsigned DEFAULT NULL,
-  `facetsDegenerate` int(10) unsigned DEFAULT NULL,
-  `facetsRemoved` int(10) unsigned DEFAULT NULL,
-  `facetsAdded` int(10) unsigned DEFAULT NULL,
-  `facetsReversed` int(10) unsigned DEFAULT NULL,
-  `volume` float DEFAULT NULL,
-  `parts` int(10) unsigned DEFAULT NULL,
-  `edgesFixed` int(10) unsigned DEFAULT NULL,
-  `edgesBackwards` int(10) unsigned DEFAULT NULL,
-  `normalsFixed` int(10) unsigned DEFAULT NULL,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hash` CHAR(16) DEFAULT NOT NULL,
+  `minX` FLOAT DEFAULT NOT NULL,
+  `maxX` FLOAT DEFAULT NOT NULL,
+  `minY` FLOAT DEFAULT NOT NULL,
+  `maxY` FLOAT DEFAULT NOT NULL,
+  `minZ` FLOAT DEFAULT NOT NULL,
+  `maxZ` FLOAT DEFAULT NOT NULL,
+  `facetsOverallBefore` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsOverallAfter` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDiscon1Before` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDiscon1After` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDiscon2Before` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDiscon2After` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDiscon3Before` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDiscon3After` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDisconBefore` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDisconAfter` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsDegenerate` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsRemoved` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsAdded` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `facetsReversed` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `volume` FLOAT DEFAULT NOT NULL,
+  `parts` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `edgesFixed` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `edgesBackwards` INT(10) UNSIGNED DEFAULT NOT NULL,
+  `normalsFixed` INT(10) UNSIGNED DEFAULT NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `admeshtable` */
 
