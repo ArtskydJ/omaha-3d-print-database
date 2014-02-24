@@ -29,8 +29,6 @@ test("insert descriptive description here!", function(t) {
 			reversed: 2
 		},
 		edges: { fixed: 24, backwards: 0 },
-		inputFile: 'sphere.stl',
-		processedByVersion: '0.97.3',
 		volume: 10.889216,
 		parts: 1,
 		normalsFixed: 12
