@@ -6,9 +6,9 @@ var database = {}
 var insert = function insert(hash, obj, cb) {
 	if (typeof database[hash] !== "object") {
 		database[hash] = obj
-		return true
+		cb(false) //no err
 	} else
-		return false
+		cb(true) //err
 	}
 }
 
