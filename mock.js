@@ -6,9 +6,9 @@ var database = {}
 var insert = function insert(hash, obj, cb) {
 	if (typeof database[hash] !== "object") {
 		database[hash] = obj
-		setTimeout(function() { cb(false) }, 500) //no err
+		setTimeout(function() { cb(false) }, 500) //no error
 	} else {
-		setTimeout(function() { cb(true) }, 500) //err
+		setTimeout(function() { cb(true) }, 500) //error
 	}
 }
 
