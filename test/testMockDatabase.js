@@ -1,10 +1,7 @@
 var test = require('tap').test
 var index = require("../mock.js")
 
-var fakeHash = [
-	"17404a596cbd0d1e6c7d23fcd845ab82",	//mock
-	"11e0eed8d3696c0a632f822df385ab3c"	//database
-]
+var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"	//mock database
 
 var insertObject = {
 	x: { min: -1.334557, max: 1.370952 },
@@ -33,16 +30,16 @@ test("test the mock database!", function(t) {
 	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
 	t.equal(typeof index.get, "function", "Has a function called 'get'")
 	
-	index.insert(fakeHash[0], insertObject, function(err) {
+	index.insert(fakeHash, insertObject, function(err) {
 		if (!err) {
-			index.get(fakeHash[0], function(err, data) {
+			index.get(fakeHash, function(err, data) {
 				if (err) {
 					throw err
 				} else {
 					t.equal(typeof data, "object", "returned data is an obj")
 					t.equal(data, insertObject, "returned data is the expected data")
 					
-					index.insert(fakeHash[0], insertObject, function(err) {
+					index.insert(fakeHash, insertObject, function(err) {
 						t.ok(err, "does not allow same hash 2x")
 					})
 				}
