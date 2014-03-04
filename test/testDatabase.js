@@ -3,6 +3,7 @@ var index = require("../index.js")
 var mysql = require("mysql")
 var mysqlPassword = require("../../#sensitive-info/mysql-pw")
 var connection = mysql.createConnection({
+	host     : 'localhost',
 	user     : 'root',
 	password : mysqlPassword
 })
@@ -27,24 +28,30 @@ var insertObject = {
 	edges: { fixed: 24, backwards: 0 },
 	volume: 10.889216,
 	parts: 1,
-	normalsFixed: 12
+	normalsFixed: 12,
+	all: [
+		-1.334557,	1.370952,	-1.377953,	1.37723,
+		-1.373225,	1.242838,	3656,		3656,
+		1,	18,	0,	2,	3,	0,	3,	0,	0,	21,	0,
+		1,	10.889216,	4,	24,	14,	3,	2,	0,	12
+	]
 }
 
-connection.connect()
 
 test("insert descriptive description here!", function(t) {
 	t.plan(5)
+	connection.connect()
 	console.log("testing")
 	
 	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
 	t.equal(typeof index.get, "function", "Has a function called 'get'")
 	
-	index.insert(fakeHash, insertObject, function(err) {
+	index.insert(connection, fakeHash, insertObject, function(err) {
 		console.log("insert")
 		if (err) {
 			throw err
 		} else {
-			index.get(fakeHash, function(err, data) {
+			index.get(connection, fakeHash, function(err, data) {
 				console.log("get")
 				if (err) {
 					throw err
@@ -52,7 +59,7 @@ test("insert descriptive description here!", function(t) {
 					t.equal(typeof data, "object", "returned data is an obj")
 					t.equal(data, insertObject, "returned data is the expected data")
 					
-					index.insert(fakeHash, insertObject, function(err) {
+					index.insert(connection, fakeHash, insertObject, function(err) {
 						t.ok(err, "does not allow same hash 2x")
 					})
 				}
