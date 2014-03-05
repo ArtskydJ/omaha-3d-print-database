@@ -5,7 +5,8 @@ var mysqlPassword = require("../../#sensitive-info/mysql-pw")
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : mysqlPassword
+	password : mysqlPassword,
+	database : "admeshtable"
 })
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"	//mock database
@@ -49,8 +50,10 @@ test("insert descriptive description here!", function(t) {
 	index.insert(connection, fakeHash, insertObject, function(err) {
 		console.log("insert")
 		if (err) {
+			console.log("oh noes!!!")
 			throw err
 		} else {
+			console.log("no err so far...")
 			index.get(connection, fakeHash, function(err, data) {
 				console.log("get")
 				if (err) {
