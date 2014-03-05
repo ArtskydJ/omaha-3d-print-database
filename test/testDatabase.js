@@ -6,8 +6,10 @@ var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : mysqlPassword,
+	//database : "newdatabase20140224"
 	database : "admeshtable"
 })
+var createSql = require("../create-3.js")
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"	//mock database
 
@@ -47,23 +49,33 @@ test("insert descriptive description here!", function(t) {
 	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
 	t.equal(typeof index.get, "function", "Has a function called 'get'")
 	
-	index.insert(connection, fakeHash, insertObject, function(err) {
-		console.log("insert")
+	console.log("createSql: "+createSql)
+	
+	connection.query(createSql, function(err) {
+		console.log("create: "+err.message||"lolz")
 		if (err) {
-			console.log("oh noes!!!")
+			console.log("oh noes!!! - 0")
 			throw err
 		} else {
-			console.log("no err so far...")
-			index.get(connection, fakeHash, function(err, data) {
-				console.log("get")
+			index.insert(connection, fakeHash, insertObject, function(err) {
+				console.log("insert")
 				if (err) {
+					console.log("oh noes!!! - 1")
 					throw err
 				} else {
-					t.equal(typeof data, "object", "returned data is an obj")
-					t.equal(data, insertObject, "returned data is the expected data")
-					
-					index.insert(connection, fakeHash, insertObject, function(err) {
-						t.ok(err, "does not allow same hash 2x")
+					console.log("no err so far...")
+					index.get(connection, fakeHash, function(err, data) {
+						console.log("get")
+						if (err) {
+							throw err
+						} else {
+							t.equal(typeof data, "object", "returned data is an obj")
+							t.equal(data, insertObject, "returned data is the expected data")
+							
+							index.insert(connection, fakeHash, insertObject, function(err) {
+								t.ok(err, "does not allow same hash 2x")
+							})
+						}
 					})
 				}
 			})
