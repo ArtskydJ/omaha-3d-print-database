@@ -6,12 +6,14 @@ var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : mysqlPassword,
-	//database : "newdatabase20140224"
-	database : "admeshtable"
+//	database : "admeshtable"
+//	database : "newdatabase20140219"
+//	database : "newdatabase20140224"
+	database : "newdatabase20140306"
 })
 var createSql = require("../create-3.js")
 
-var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"	//mock database
+var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"
 
 var insertObject = {
 	x: { min: -1.334557, max: 1.370952 },
@@ -57,6 +59,14 @@ test("insert descriptive description here!", function(t) {
 			console.log("oh noes!!! - 0")
 			throw err
 		} else {
+			console.
+			index.all(connection, function(err, data) {
+				if (err) {
+					throw err
+				} else {
+					console.log("data: " + data)
+				}
+			})
 			index.insert(connection, fakeHash, insertObject, function(err) {
 				console.log("insert")
 				if (err) {

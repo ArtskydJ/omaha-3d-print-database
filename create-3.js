@@ -1,7 +1,8 @@
 module.exports =
-	"CREATE DATABASE /*!32312 IF NOT EXISTS newdatabase20140224 /*!40100 DEFAULT CHARACTER SET utf8 */;"
-	+ "\nUSE newdatabase20140224;"
-	+ "\nDROP TABLE IF EXISTS admeshtable;"
+//	"CREATE DATABASE newdatabase20140306;"
+	"CREATE DATABASE newdatabase20140219;"
+//	+ "\nUSE newdatabase20140219;"
+//	+ "\nDROP TABLE IF EXISTS admeshtable;"
 	+ "\nCREATE TABLE admeshtable ("
 	+ "\n  id int(10) unsigned NOT NULL AUTO_INCREMENT,"
 	+ "\n  hash char(16) DEFAULT NOT NULL,"
@@ -31,8 +32,23 @@ module.exports =
 	+ "\n  edgesBackwards int(10) unsigned DEFAULT NOT NULL,"
 	+ "\n  normalsFixed int(10) unsigned DEFAULT NOT NULL,"
 	+ "\n  PRIMARY KEY (id)"
-	+ "\n)  ENGINE=InnoDB DEFAULT CHARSET=utf8;"
-	+ "\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;"
-	+ "\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;"
-	+ "\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;"
-	+ "\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;"
+	+ "\n) CHARSET=utf8;"
+
+
+if (0) {
+	var n = "CREATE DATABASE /*!32312 IF NOT EXISTS newdatabase20140224 /*!40100 DEFAULT CHARACTER SET utf8 */;"
+		+ "\nUSE newdatabase20140224;"
+		+ "\nDROP TABLE IF EXISTS admeshtable;"
+		+ "\nCREATE TABLE admeshtable ("
+		
+		//...
+		
+		
+		+ "\n  normalsFixed int(10) unsigned DEFAULT NOT NULL,"
+		+ "\n  PRIMARY KEY (id)"
+		+ "\n)  ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+		+ "\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;"
+		+ "\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;"
+		+ "\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;"
+		+ "\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;"
+}
