@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 //	database : "newdatabase20140224"
 	database : "newdatabase20140306"
 })
-var createSql = require("../create-3.js")
+var createSql = require("../create-4.js")
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"
 
