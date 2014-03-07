@@ -1,5 +1,6 @@
 var test = require('tap').test
-var index = require("../mock.js")
+var Index = require("../mock.js")
+var index = new Index()
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"	//mock database
 
