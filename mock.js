@@ -1,5 +1,4 @@
-
-//write a javascript module to write to mock database
+//Javascript module to write to a mock database
 
 var database = {}
 
@@ -8,7 +7,7 @@ var insert = function insert(hash, obj, cb) {
 		database[hash] = obj
 		setTimeout(function() { cb(false) }, 500) //no error
 	} else {
-		setTimeout(function() { cb(true) }, 500) //error
+		setTimeout(function() { cb(new Error("Hash exists in database already")) }, 500) //error
 	}
 }
 
@@ -21,7 +20,9 @@ var get = function get(hash, cb) {
 	) }, 500)
 }
 
-module.exports = {
-	insert: insert,
-	get: get
+module.exports = function() {
+	return {
+		insert: insert,
+		get: get
+	}
 }
