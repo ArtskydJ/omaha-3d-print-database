@@ -1,6 +1,8 @@
+CONSTRUCTORS:
 	use constructor function for mock and actual
 	constructor takes connection once, returns functions
 incorrect use of conn.database, hardcode the table name (done?)
+ESCAPATION:
 	escape the values that are being put into the database (can be done with ('?', '?'))
 	use "?"s as placeholders
 	INSERT INTO table (hash, col1, col2) VALUES ('?', '?', '?')
