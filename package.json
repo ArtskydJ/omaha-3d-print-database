@@ -1,0 +1,29 @@
+{
+  "name": "omaha-3d-print-database",
+  "version": "0.1.2",
+  "main": "./index.js",
+  "author": {
+    "name": "ArtskydJ",
+    "email": "josephdykstra@gmail.com"
+  },
+  "description": "n/a",
+  "keywords": [
+    "omaha",
+    "database"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArtskydJ/omaha-3d-print-database.git"
+  },
+  "devDependencies": {
+    "tap": "~0.4.8"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap ./test/*.js"
+  },
+  "dependencies": {
+  }
+}

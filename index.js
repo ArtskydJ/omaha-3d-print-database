@@ -18,8 +18,10 @@ var get = function get(conn, hash, cb) { //get a row (hash, cb) (SELECT)
 	conn.query("SELECT * FROM admeshtable\nWHERE hash = '"+hash+"'", cb)
 }
 
-module.exports = {
-	insert: insert,
-	all: all,
-	get: get
+module.exports = function(conn) {
+	return {
+		insert: insert.bind(null, conn),
+		all: all.bind(null, conn),
+		get: get.bind(null, conn)
+	}
 }

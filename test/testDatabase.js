@@ -1,16 +1,14 @@
 var test = require('tap').test
-var index = require("../index.js")
+var Index = require("../index.js")
 var mysql = require("mysql")
 var mysqlPassword = require("../../#sensitive-info/mysql-pw")
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : mysqlPassword,
-//	database : "admeshtable"
-//	database : "newdatabase20140219"
-//	database : "newdatabase20140224"
-	database : "newdatabase20140306"
+	database : "newdatabase20140306" //database, not table
 })
+var index = new Index(connection)
 var createSql = require("../create-4.js")
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"
