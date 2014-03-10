@@ -3,7 +3,10 @@
 var mysql = require('mysql');
 
 var insert = function insert(conn, hash, obj, cb) { //adds a row by running and "insert" query)
-	conn.query("INSERT INTO admeshtable\nVALUES ("+hash+","+obj.all.toString()+");", cb)	
+	conn.query("INSERT INTO admeshtable (id, hash, volume, parts, minX, maxX, "+
+		"minY, maxY, minZ, maxZ) VALUES ('?', '?', '?', '?', '?', '?', '?', "+
+		"'?', '?', '?')".escape(obj.id, hash, obj.volume, obj.parts,
+		obj.x.min, obj.x.max, obj.y.min, obj.y.max, obj.z.min, obj.z.max), cb)
 }
 
 var all = function all(conn, cb) { //get all (hash, cb) (SELECT)
