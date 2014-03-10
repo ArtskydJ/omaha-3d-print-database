@@ -15,7 +15,7 @@ var all = function all(conn, cb) { //get all (hash, cb) (SELECT)
 }
 
 var get = function get(conn, hash, cb) { //get a row (hash, cb) (SELECT)
-	conn.query("SELECT * FROM admeshtable\nWHERE hash = '"+hash+"'", cb)
+	conn.query("SELECT * FROM admeshtable WHERE hash = '"+hash+"'", cb)
 }
 
 module.exports = function(conn) {
