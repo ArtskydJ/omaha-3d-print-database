@@ -6,7 +6,8 @@ var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : mysqlPassword,
-	database : "newdatabase20140313" //database, not table
+	database : "newdatabase20140219" //database, not table
+	//database : "conn20140313" //database, not table
 })
 var index = new Index(connection)
 var createSql = require("../create-4.js")

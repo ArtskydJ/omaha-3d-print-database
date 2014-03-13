@@ -1,17 +1,35 @@
 module.exports =
-	"CREATE DATABASE newdatabase20140313;"
-	+ "\nUSE newdatabase20140313;"
-//	+ "\nDROP TABLE IF EXISTS admeshtable;"
-	+ "\nCREATE TABLE admeshtable ("
-	+ "\n  id int(10) unsigned NOT NULL AUTO_INCREMENT,"
-	+ "\n  hash char(16) DEFAULT NOT NULL,"
-	+ "\n  volume float DEFAULT NOT NULL,"
-	+ "\n  parts int(10) unsigned DEFAULT NOT NULL,"
-	+ "\n  minX float DEFAULT NOT NULL,"
-	+ "\n  maxX float DEFAULT NOT NULL,"
-	+ "\n  minY float DEFAULT NOT NULL,"
-	+ "\n  maxY float DEFAULT NOT NULL,"
-	+ "\n  minZ float DEFAULT NOT NULL,"
-	+ "\n  maxZ float DEFAULT NOT NULL,"
-	+ "\n  PRIMARY KEY (id)"
-	+ "\n) CHARSET=utf8;"
+	"CREATE DATABASE `newdatabase20140313`;"
+//	+ "USE `newdatabase20140313`;"
+//	+ "DROP TABLE IF EXISTS `admeshtable`;"
+	+ "CREATE TABLE `admeshtable` ("
+	+ "  id int(10) unsigned NOT NULL AUTO_INCREMENT,"
+	+ "  hash char(16) DEFAULT NOT NULL,"
+	+ "  volume float DEFAULT NOT NULL,"
+	+ "  parts int(10) unsigned DEFAULT NOT NULL,"
+	+ "  minX float DEFAULT NOT NULL,"
+	+ "  maxX float DEFAULT NOT NULL,"
+	+ "  minY float DEFAULT NOT NULL,"
+	+ "  maxY float DEFAULT NOT NULL,"
+	+ "  minZ float DEFAULT NOT NULL,"
+	+ "  maxZ float DEFAULT NOT NULL,"
+	+ "  PRIMARY KEY (id)"
+	+ ") CHARSET=utf8;"
+
+/*
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+*/
