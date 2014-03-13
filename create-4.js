@@ -1,6 +1,6 @@
 module.exports =
-	"CREATE DATABASE newdatabase20140219;"
-	+ "\nUSE newdatabase20140219;"
+	"CREATE DATABASE newdatabase20140313;"
+	+ "\nUSE newdatabase20140313;"
 //	+ "\nDROP TABLE IF EXISTS admeshtable;"
 	+ "\nCREATE TABLE admeshtable ("
 	+ "\n  id int(10) unsigned NOT NULL AUTO_INCREMENT,"
