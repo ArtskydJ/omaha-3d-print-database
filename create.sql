@@ -1,16 +1,17 @@
-CREATE DATABASE IF NOT EXITSTS `omaha3dprint`
+CREATE DATABASE IF NOT EXISTS `omaha3dprint`;
 USE `omaha3dprint`;
-DROP TABLE IF EXISTS `admesh`;
-CREATE TABLE `admesh` (
-  id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  hash char(16) DEFAULT NOT NULL,
-  volume float DEFAULT NOT NULL,
-  parts int(10) unsigned DEFAULT NOT NULL,
-  minX float DEFAULT NOT NULL,
-  maxX float DEFAULT NOT NULL,
-  minY float DEFAULT NOT NULL,
-  maxY float DEFAULT NOT NULL,
-  minZ float DEFAULT NOT NULL,
-  maxZ float DEFAULT NOT NULL,
-  PRIMARY KEY (id)
+DROP TABLE IF EXISTS `stl_properties`;
+CREATE TABLE `stl_properties` (
+	id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`hash` CHAR(32) NOT NULL,
+	volume FLOAT NOT NULL,
+	parts INT(10) UNSIGNED NOT NULL,
+	minX FLOAT NOT NULL,
+	maxX FLOAT NOT NULL,
+	minY FLOAT NOT NULL,
+	maxY FLOAT NOT NULL,
+	minZ FLOAT NOT NULL,
+	maxZ FLOAT NOT NULL,
+	PRIMARY KEY (id),
+	UNIQUE INDEX `hash` (`hash`)
 ) CHARSET=utf8;
