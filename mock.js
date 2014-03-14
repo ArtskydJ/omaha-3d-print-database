@@ -20,6 +20,15 @@ var get = function get(hash, cb) {
 	) }, 500)
 }
 
+var remove = function remove(hash, cb) {
+	if (typeof database[hash] === "object") {
+		delete database[hash]
+	}
+	setTimeout(function() {
+		cb(typeof database[hash] === "object")
+	}, 500)
+}
+
 module.exports = function() {
 	return {
 		insert: insert,

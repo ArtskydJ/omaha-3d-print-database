@@ -1,4 +1,5 @@
 var test = require('tap').test
+var safeErrMessage = require("../../safe-error-message/index.js")
 var Index = require("../mock.js")
 var index = new Index()
 
@@ -26,26 +27,22 @@ var insertObject = {
 }
 
 test("test the mock database!", function(t) {
-	t.plan(5)
+	t.plan(6)
 	
 	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
 	t.equal(typeof index.get, "function", "Has a function called 'get'")
 	
 	index.insert(fakeHash, insertObject, function(err) {
-		if (!err) {
-			index.get(fakeHash, function(err, data) {
-				if (err) {
-					throw err
-				} else {
-					t.equal(typeof data, "object", "returned data is an obj")
-					t.equal(data, insertObject, "returned data is the expected data")
-					
-					index.insert(fakeHash, insertObject, function(err) {
-						t.ok(err, "does not allow same hash 2x")
-					})
-				}
+		t.notOk(err, "'insert' error" + safeErrMessage(err))
+		index.get(fakeHash, function(err, data) {
+			t.notOk(err, "'get' error" + safeErrMessage(err))
+			t.equal(typeof data, "object", "returned data is an obj")
+			t.equal(data, insertObject, "returned data is the expected data")
+			
+			index.insert(fakeHash, insertObject, function(err) {
+				t.ok(err, "does not allow same hash 2x")
 			})
-		}
+		})
 	})
 	
 	setTimeout(function() {
