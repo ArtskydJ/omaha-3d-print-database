@@ -31,7 +31,7 @@ var expectedObject = {
 
 
 test("insert descriptive description here!", function(t) {
-	t.plan(11)
+	t.plan(12)
 	
 	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
 	t.equal(typeof index.get, "function", "Has a function called 'get'")
@@ -47,14 +47,12 @@ test("insert descriptive description here!", function(t) {
 					t.ok(data, "data is truthy (not null)")
 					t.equal(typeof data, "object", "returned data is an obj")
 					t.equal(data.length, 1, "only returned one object")
-					console.log("\n\n\n\n\n\nDATA:\n")
-					console.dir(data[0])
-					console.log("\n\n\n\n\n\n")
 					expectedObject.id = data[0].id
 					t.similar(data[0], expectedObject, "returned data is the expected data")
 				})
 				index.insert(fakeHash, insertObject, function(err) {
-					t.ok(err, "does not allow same hash 2x") //if objs are truthy, then this is buggy
+					t.ok(err, "throws error for duplicate hash")
+					t.equal(err.errno, 1062, "correct error is thrown for duplicate hash")
 				})
 			})
 		})
