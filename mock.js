@@ -32,6 +32,7 @@ var remove = function remove(hash, cb) {
 module.exports = function() {
 	return {
 		insert: insert,
-		get: get
+		get: get,
+		remove: remove
 	}
 }
