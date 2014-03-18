@@ -16,7 +16,7 @@ var get = function get(hash, cb) {
 	//return (typeof database[hash] === "object") ? database[hash] : false
 	setTimeout(function() { cb(
 		(typeof database[hash] !== "object"),
-		(typeof database[hash] !== "object") ? false : database[hash]
+		(typeof database[hash] !== "object") ? undefined : database[hash]
 	) }, 500)
 }
 
