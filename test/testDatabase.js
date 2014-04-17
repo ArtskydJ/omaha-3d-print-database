@@ -41,15 +41,6 @@ var expectedObject = {
 	minZ: insertObject.z.min, maxZ: insertObject.z.max
 }
 
-var done=0
-function end(conn, t) {
-	done++
-	if (done>=2) {
-		conn.end()
-		t.end()
-	}
-}
-
 test("insert descriptive description here!", function(t) {
 	t.plan(12)
 	
@@ -70,12 +61,12 @@ test("insert descriptive description here!", function(t) {
 					expectedObject.id = data[0].id
 					t.ok(util.inspect(data[0])===util.inspect(expectedObject),
 						"returned data is the expected data")
-					end(connection, t)
-				})
-				index.insert(fakeHash, insertObject, function(err) {
-					t.ok(err, "throws error for duplicate hash")
-					t.equal(err.errno, 1062, "correct error is thrown for duplicate hash")
-					end(connection, t)
+					index.insert(fakeHash, insertObject, function(err) {
+						t.ok(err, "throws error for duplicate hash")
+						t.equal(err.errno, 1062, "correct error is thrown for duplicate hash")
+						connection.end()
+						t.end()
+					})
 				})
 			})
 		})
