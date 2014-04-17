@@ -1,6 +1,7 @@
 //write a javascript module to write to sql database
 
-var mysql = require('mysql');
+var mysql = require('mysql')
+var mock = require("./mock.js")
 
 var insert = function insert(conn, hash, obj, cb) { //adds a row by running and "insert" query)
 	conn.query("INSERT INTO stl_properties (hash, volume, parts, minX, maxX, minY, maxY, minZ, maxZ) " +
@@ -17,9 +18,13 @@ var remove = function remove(conn, hash, cb) { //get a row (hash, cb) (SELECT)
 }
 
 module.exports = function(conn) {
-	return {
-		insert: insert.bind(null, conn),
-		get:    get.bind(null, conn),
-		remove: remove.bind(null, conn)
+	if (!conn) {
+		return mock()
+	} else {
+		return {
+			insert: insert.bind(null, conn),
+			get:    get.bind(null, conn),
+			remove: remove.bind(null, conn),
+		}
 	}
 }

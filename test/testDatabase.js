@@ -1,6 +1,7 @@
 var test = require('tap').test
 var Index = require("../index.js")
-var mysql = require("mysql")
+var mysql = require('mysql')
+var util = require('util')
 var mysqlPassword = require("../../#sensitive-info/mysql-pw")
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -8,7 +9,7 @@ var connection = mysql.createConnection({
 	password : mysqlPassword,
 	database : "omaha3dprint"
 })
-var safeErrMessage = require("../../safe-error-message/index.js")
+var safeErrMessage = require('safe-err-msg')
 var index = new Index(connection)
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"
 
@@ -29,7 +30,6 @@ var expectedObject = {
 	minZ: insertObject.z.min, maxZ: insertObject.z.max
 }
 
-
 test("insert descriptive description here!", function(t) {
 	t.plan(12)
 	
@@ -37,18 +37,19 @@ test("insert descriptive description here!", function(t) {
 	t.equal(typeof index.get, "function", "Has a function called 'get'")
 	
 	connection.connect(function (err) {
-		t.notOk(err, "connection error" + safeErrMessage(err))
+		t.notOk(err, "connection error " + safeErrMessage(err))
 		index.remove(fakeHash, function(err) {
-			t.notOk(err, "'remove' error" + safeErrMessage(err))
+			t.notOk(err, "'remove' error " + safeErrMessage(err))
 			index.insert(fakeHash, insertObject, function(err) {
-				t.notOk(err, "'insert' error" + safeErrMessage(err))
+				t.notOk(err, "'insert' error " + safeErrMessage(err))
 				index.get(fakeHash, function(err, data) {
-					t.notOk(err, "'get' error" + safeErrMessage(err))
+					t.notOk(err, "'get' error " + safeErrMessage(err))
 					t.ok(data, "data is truthy (not null)")
 					t.equal(typeof data, "object", "returned data is an obj")
 					t.equal(data.length, 1, "only returned one object")
 					expectedObject.id = data[0].id
-					t.similar(data[0], expectedObject, "returned data is the expected data")
+					t.ok(util.inspect(data[0])===util.inspect(expectedObject),
+						"returned data is the expected data")
 				})
 				index.insert(fakeHash, insertObject, function(err) {
 					t.ok(err, "throws error for duplicate hash")
@@ -59,6 +60,8 @@ test("insert descriptive description here!", function(t) {
 	})
 	
 	setTimeout(function() {
+		console.log("hey")
 		t.end()
+		console.log("hey")
 	}, 5000)
 })

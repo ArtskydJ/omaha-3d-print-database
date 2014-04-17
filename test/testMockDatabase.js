@@ -1,7 +1,7 @@
 var test = require('tap').test
-var safeErrMessage = require("../../safe-error-message/index.js")
-var Index = require("../mock.js")
-var index = new Index()
+var safeErrMessage = require('safe-err-msg')
+var Database = require('omaha-3d-print-database')
+var database = new Database()
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"	//mock database
 
@@ -29,17 +29,17 @@ var insertObject = {
 test("test the mock database!", function(t) {
 	t.plan(6)
 	
-	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
-	t.equal(typeof index.get, "function", "Has a function called 'get'")
+	t.equal(typeof database.insert, "function", "Has a function called 'insert'")
+	t.equal(typeof database.get, "function", "Has a function called 'get'")
 	
-	index.insert(fakeHash, insertObject, function(err) {
+	database.insert(fakeHash, insertObject, function(err) {
 		t.notOk(err, "'insert' error" + safeErrMessage(err))
-		index.get(fakeHash, function(err, data) {
+		database.get(fakeHash, function(err, data) {
 			t.notOk(err, "'get' error" + safeErrMessage(err))
 			t.equal(typeof data, "object", "returned data is an obj")
 			t.equal(data, insertObject, "returned data is the expected data")
 			
-			index.insert(fakeHash, insertObject, function(err) {
+			database.insert(fakeHash, insertObject, function(err) {
 				t.ok(err, "does not allow same hash 2x")
 			})
 		})
