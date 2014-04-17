@@ -41,11 +41,8 @@ test("test the mock database!", function(t) {
 			
 			database.insert(fakeHash, insertObject, function(err) {
 				t.ok(err, "does not allow same hash 2x")
+				t.end()
 			})
 		})
 	})
-	
-	setTimeout(function() {
-		t.end()
-	}, 5000)
 })
