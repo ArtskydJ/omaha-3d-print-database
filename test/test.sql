@@ -25,4 +25,4 @@ SELECT * FROM stl_properties;
 
 DELETE FROM stl_properties WHERE `hash` = 'ba4301c9e5aa93d96bdb5c87d9cf089d';
 
-DROP DATABASE `omaha3dprint`;
+DROP DATABASE IF EXISTS `omaha3dprint`;
