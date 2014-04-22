@@ -5,19 +5,21 @@ var database = {}
 var insert = function insert(hash, obj, cb) {
 	if (typeof database[hash] !== "object") {
 		database[hash] = obj
-		setTimeout(function() { cb(false) }, 500) //no error
+		setTimeout(function() { cb(false) }, 100) //no error
 	} else {
-		setTimeout(function() { cb(new Error("Hash exists in database already")) }, 500) //error
+		setTimeout(function() { cb(new Error("Hash exists in database already")) }, 100) //error
 	}
 }
 
 var get = function get(hash, cb) {
-	//get function (hash, cb) (runs a select query)
-	//return (typeof database[hash] === "object") ? database[hash] : false
-	setTimeout(function() { cb(
-		(typeof database[hash] !== "object"),
-		(typeof database[hash] !== "object") ? undefined : database[hash]
-	) }, 500)
+	if (typeof database[hash] !== "object")
+		setTimeout(function() {
+			cb(new Error("mock 'get' couldn't find data"), undefined)
+		}, 100)
+	else
+		setTimeout(function() {
+			cb(false, database[hash])
+		}, 100)
 }
 
 var remove = function remove(hash, cb) {
@@ -26,7 +28,7 @@ var remove = function remove(hash, cb) {
 	}
 	setTimeout(function() {
 		cb(typeof database[hash] === "object")
-	}, 500)
+	}, 100)
 }
 
 module.exports = function() {
