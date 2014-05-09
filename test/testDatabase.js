@@ -1,5 +1,6 @@
+var useMock = true
 /**
-To pass tests:
+To pass tests: (if useMock is false)
 	Open SQLyog with settings:
 		localhost
 		root
@@ -10,7 +11,7 @@ To pass tests:
 	Run npm test
 */
 var test = require('tap').test
-var Index = require("../index.js")
+var Database = require('omaha-3d-print-database')
 var mysql = require('mysql')
 var util = require('util')
 var mysqlPassword = require("../../#sensitive-info/mysql-pw")
@@ -21,7 +22,9 @@ var connection = mysql.createConnection({
 	database : "omaha3dprint"
 })
 var safeErrMessage = require('safe-err-msg')
-var index = new Index(connection)
+if (useMock)
+	connection = null
+var database = new Database(connection)
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"
 
 var insertObject = { //stores only 4 numerals after the '.'
@@ -36,24 +39,42 @@ var expectedObject = {
 	hash: fakeHash,
 	volume: insertObject.volume,
 	parts: insertObject.parts,
-	minX: insertObject.x.min, maxX: insertObject.x.max,
-	minY: insertObject.y.min, maxY: insertObject.y.max,
-	minZ: insertObject.z.min, maxZ: insertObject.z.max
+	x.min: insertObject.x.min,
+	x.max: insertObject.x.max,
+	y.min: insertObject.y.min,
+	y.max: insertObject.y.max,
+	z.min: insertObject.z.min,
+	z.max: insertObject.z.max
 }
 
-test("insert descriptive description here!", function(t) {
+
+	database.insert(fakeHash, insertObject, function(err) {
+		t.notOk(err, "'insert' error" + safeErrMessage(err))
+		database.get(fakeHash, function(err, data) {
+			t.notOk(err, "'get' error" + safeErrMessage(err))
+			t.equal(typeof data, "object", "returned data is an obj")
+			t.equal(data, insertObject, "returned data is the expected data")
+			
+			database.insert(fakeHash, insertObject, function(err) {
+				t.ok(err, "does not allow same hash 2x")
+				t.end()
+			})
+		})
+	})
+
+test("test the actual database!", function(t) {
 	t.plan(12)
 	
-	t.equal(typeof index.insert, "function", "Has a function called 'insert'")
-	t.equal(typeof index.get, "function", "Has a function called 'get'")
+	t.equal(typeof database.insert, "function", "Has a function called 'insert'")
+	t.equal(typeof database.get, "function", "Has a function called 'get'")
 	
 	connection.connect(function (err) {
 		t.notOk(err, "connection error " + safeErrMessage(err))
-		index.remove(fakeHash, function(err) {
+		database.remove(fakeHash, function(err) {
 			t.notOk(err, "'remove' error " + safeErrMessage(err))
-			index.insert(fakeHash, insertObject, function(err) {
+			database.insert(fakeHash, insertObject, function(err) {
 				t.notOk(err, "'insert' error " + safeErrMessage(err))
-				index.get(fakeHash, function(err, data) {
+				database.get(fakeHash, function(err, data) {
 					t.notOk(err, "'get' error " + safeErrMessage(err))
 					t.ok(data, "data is truthy (not null)")
 					t.equal(typeof data, "object", "returned data is an obj")
@@ -61,7 +82,7 @@ test("insert descriptive description here!", function(t) {
 					expectedObject.id = data[0].id
 					t.ok(util.inspect(data[0])===util.inspect(expectedObject),
 						"returned data is the expected data")
-					index.insert(fakeHash, insertObject, function(err) {
+					database.insert(fakeHash, insertObject, function(err) {
 						t.ok(err, "throws error for duplicate hash")
 						t.equal(err.errno, 1062, "correct error is thrown for duplicate hash")
 						connection.end()
