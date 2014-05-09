@@ -1,6 +1,3 @@
-//write a javascript module to write to sql database
-
-var mysql = require('mysql')
 var mock = require("./mock.js")
 
 var insert = function insert(conn, hash, obj, cb) { //adds a row by running and "insert" query)
