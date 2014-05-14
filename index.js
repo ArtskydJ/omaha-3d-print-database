@@ -8,22 +8,25 @@ var insert = function insert(conn, hash, obj, cb) { //adds a row by running and 
 }
 
 var get = function get(conn, hash, cb) { //get a row (hash, cb) (SELECT)
-	conn.query("SELECT * FROM stl_properties WHERE hash = ?;", [hash], function(err, arr) {
+	conn.query("SELECT * FROM stl_properties WHERE `hash` = ?;", [hash], function(err, arr) {
 		//console.log("arr", arr[0])
+		var result = undefined
 		if (arr === null)
 			arr = []
 		if (!err && arr.length!=1)
 			err = new Error("returned results were of an unexpected length of "+arr.length)
-		result = arr[0]
-		result.x = {min: result.minX, max: result.maxX}
-		result.y = {min: result.minY, max: result.maxY}
-		result.z = {min: result.minZ, max: result.maxZ}
-		delete result.minX
-		delete result.maxX
-		delete result.minY
-		delete result.maxY
-		delete result.minZ
-		delete result.maxZ
+		if (arr.length>0) {
+			result = arr[0]
+			result.x = {min: result.minX, max: result.maxX}
+			result.y = {min: result.minY, max: result.maxY}
+			result.z = {min: result.minZ, max: result.maxZ}
+			delete result.minX
+			delete result.maxX
+			delete result.minY
+			delete result.maxY
+			delete result.minZ
+			delete result.maxZ
+		}
 		cb(err, result)
 	})
 }
