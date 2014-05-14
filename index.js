@@ -10,10 +10,10 @@ var insert = function insert(conn, hash, obj, cb) { //adds a row by running and 
 var get = function get(conn, hash, cb) { //get a row (hash, cb) (SELECT)
 	conn.query("SELECT * FROM stl_properties WHERE hash = ?;", [hash], function(err, arr) {
 		//console.log("arr", arr[0])
-		/*if (arr === null) {
+		if (arr === null)
 			arr = []
-			err = new Error("null returned from mySQL database")
-		}*/
+		if (!err && arr.length!=1)
+			err = new Error("returned results were of an unexpected length of "+arr.length)
 		result = arr[0]
 		result.x = {min: result.minX, max: result.maxX}
 		result.y = {min: result.minY, max: result.maxY}
