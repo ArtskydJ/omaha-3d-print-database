@@ -38,14 +38,14 @@ var get = function get(hash, cb) {
 }
 
 var remove = function remove(hash, cb) {
-	var err = false
 	if (typeof database[hash] === "object") {
 		delete database[hash]
-	} else {
-		err = new Error("couldn't find "+hash+" in database")
 	}
+	/*else {
+		err = new Error("couldn't find "+hash+" in database")
+	}*/
 	setTimeout(function() {
-		cb(err)
+		cb(null)
 	}, 10)
 }
 

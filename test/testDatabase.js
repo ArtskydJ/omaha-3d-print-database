@@ -1,4 +1,4 @@
-var useMock = false
+var useMock = true
 /**
 To pass tests: (if useMock is false)
 	Open SQLyog with settings:
@@ -14,11 +14,13 @@ var test = require('tap').test
 var Database = require('omaha-3d-print-database')
 var mysql = require('mysql')
 var util = require('util')
-var _ = require('underscore')
+var areEqual = require('objects-equal')
 var mysqlPassword = require("../../#sensitive-info/mysql-pw")
-var safeErrMessage = require('safe-err-msg')
+var safeErrMsg = require('safe-err-msg')
 
 var connection
+var database
+var testMessage
 if (!useMock) {
 	connection = mysql.createConnection({
 		host     : 'localhost',
@@ -26,20 +28,22 @@ if (!useMock) {
 		password : mysqlPassword,
 		database : "omaha3dprint"
 	})
-}
-
-var database = new Database(connection)
-
-if (useMock) {
+	testMessage = "test the actual database!"
+	database = new Database(connection)
+} else {
 	connection = {
 		connect: function(cb) { cb() },
 		end: function() {}
 	}
+	testMessage = "test the mock database!"
+	database = new Database() //There is not supposed to be a connection here
 }
 
 var fakeHash = "ba4301c9e5aa93d96bdb5c87d9cf089d"
 
 var insertObject = { //mysql stores only 4 numerals after the '.'
+	id: null,
+	hash: fakeHash,
 	volume: 10.8892,
 	parts: 1,
 	x: { min: -1.3345, max: 1.3709 },
@@ -47,27 +51,24 @@ var insertObject = { //mysql stores only 4 numerals after the '.'
 	z: { min: -1.3732, max: 1.2428 }
 }
 
-test("test the actual database!", function(t) {
-	t.plan(10)
+test(testMessage, function(t) {
+	t.plan(11)
 	
 	t.equal(typeof database.insert, "function", "Has a function called 'insert'")
 	t.equal(typeof database.get, "function", "Has a function called 'get'")
 	
 	connection.connect(function (err) {
-		t.notOk(err, "connection error " + safeErrMessage(err))
-		//database.remove(fakeHash, function(err) {					//mock did not have this
-		//	t.notOk(err, "'remove' error " + safeErrMessage(err))
+		t.notOk(err, "connection error " + safeErrMsg(err))
+		database.remove(fakeHash, function(err) {					//mock no likey, actual likey
+			t.notOk(err, "'remove' error " + safeErrMsg(err))
 			database.insert(fakeHash, insertObject, function(err) {
-				t.notOk(err, "'insert' error " + safeErrMessage(err))
+				t.notOk(err, "'insert' error " + safeErrMsg(err))
 				database.get(fakeHash, function(err, data) {
-					t.notOk(err, "'get' error " + safeErrMessage(err))
+					t.notOk(err, "'get' error " + safeErrMsg(err))
 					t.ok(data, "data is truthy (not null)")
 					t.equal(typeof data, "object", "returned data is an obj")
-					
 					insertObject.id = data.id
-					insertObject.hash = fakeHash
-					t.ok(_.isEqual(data, insertObject), "returned data is the expected data")
-					
+					t.ok(areEqual(data, insertObject), "returned data is the expected data")
 					database.insert(fakeHash, insertObject, function(err) {
 						t.ok(err, "throws error for duplicate hash")
 						t.equal(err.errno, 1062, "correct error is thrown for duplicate hash")
@@ -76,24 +77,6 @@ test("test the actual database!", function(t) {
 					})
 				})
 			})
-		//})
-	})
-})
-
-/* MOCK DB PREVIOUS TESTS!!!
-	database.insert(fakeHash, insertObject, function(err) {
-		t.notOk(err, "'insert' error" + safeErrMessage(err))
-		database.get(fakeHash, function(err, data) {
-			t.notOk(err, "'get' error" + safeErrMessage(err))
-			t.equal(typeof data, "object", "returned data is an obj")
-			t.equal(data, insertObject, "returned data is the expected data")
-			
-			database.insert(fakeHash, insertObject, function(err) {
-				t.ok(err, "does not allow same hash 2x")
-				t.end()
-			})
 		})
 	})
-*/
-
-
+})
