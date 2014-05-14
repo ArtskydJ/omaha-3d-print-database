@@ -17,7 +17,8 @@
     "url": "https://github.com/ArtskydJ/omaha-3d-print-database.git"
   },
   "devDependencies": {
-    "tap": "~0.4.8"
+    "tap": "~0.4.8",
+	"objects-equal": "~0.0.1"
   },
   "directories": {
     "test": "test"
