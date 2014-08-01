@@ -14,7 +14,6 @@ var test = require('tap').test
 var Database = require('omaha-3d-print-database')
 var mysql = require('mysql')
 var util = require('util')
-var areEqual = require('objects-equal')
 var mysqlPassword = require("../../#sensitive-info/mysql-pw")
 var safeErrMsg = require('safe-err-msg')
 
@@ -68,7 +67,7 @@ test(testMessage, function(t) {
 					t.ok(data, "data is truthy (not null)")
 					t.equal(typeof data, "object", "returned data is an obj")
 					insertObject.id = data.id
-					t.ok(areEqual(data, insertObject), "returned data is the expected data")
+					t.deepEqual(data, insertObject, "returned data is the expected data")
 					database.insert(fakeHash, insertObject, function(err) {
 						t.ok(err, "throws error for duplicate hash")
 						t.equal(err.errno, 1062, "correct error is thrown for duplicate hash")
